@@ -1,0 +1,7 @@
+bin/
+obj/
+Environment.props
+*.user
+.vs/
+Cjayride.PersistentRaids.dll
+thunderstore-upload/
