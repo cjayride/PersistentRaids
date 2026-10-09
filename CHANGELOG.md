@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.8
+
+- **RaidTimeout:** End the random event (not necessarily the mobs) when nobody is in the event area for `EndEventAfterNoPlayersInAreaMinutes` (default **25**), or when `MaxRaidWallClockMinutes` (default **90**) elapses since the event started. Fixes raids frozen by `PauseIfNoPlayerInArea` after sailing away. Set either to **0** to disable.
+
 ## 1.0.7
 
 - Raid creature cap counts only raid creatures, from the server's saved records, so it works on a dedicated server. Tames, wildlife, normal spawns, and bosses are never counted or removed.

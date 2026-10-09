@@ -12,6 +12,10 @@ Commands: `persistraid clear | event | stop | cap | boss <prefab>`
 
 ## Changelog
 
+### 1.0.8
+
+- **RaidTimeout:** If nobody is in the event circle for 25 real minutes, or the event has been running 90 minutes, the random event ends so Custom Raids can roll again (mobs may stay).
+
 ### 1.0.7
 
 - Cap counts only raid creatures and works on a dedicated server. Tames, wildlife, and bosses are never removed.

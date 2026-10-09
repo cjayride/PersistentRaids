@@ -20,6 +20,9 @@ namespace Cjayride.PersistentRaids
         internal static ConfigEntry<bool> EventMonstersSurviveRaidEnd;
         internal static ConfigEntry<bool> NeverDespawnNightMonsters;
 
+        internal static ConfigEntry<float> EndEventAfterNoPlayersInAreaMinutes;
+        internal static ConfigEntry<float> MaxRaidWallClockMinutes;
+
         internal static ConfigEntry<bool> AllowMultipleRaids;
         internal static ConfigEntry<bool> ContinueSpawningWithoutPlayers;
         internal static ConfigEntry<float> SpawnWithoutPlayersDuration;
@@ -60,6 +63,18 @@ namespace Cjayride.PersistentRaids
             NeverDespawnBosses = config.Bind("Despawn", "NeverDespawnBosses", true, Admin("Bosses persist / skip far-despawn. Hunt range is still raid-only."));
             EventMonstersSurviveRaidEnd = config.Bind("Despawn", "EventMonstersSurviveRaidEnd", true, Admin("Event creatures keep hunting after the raid timer ends."));
             NeverDespawnNightMonsters = config.Bind("Despawn", "NeverDespawnNightMonsters", true, Admin("Ignore despawn-in-day on night-spawned event creatures."));
+
+            EndEventAfterNoPlayersInAreaMinutes = config.Bind(
+                "RaidTimeout",
+                "EndEventAfterNoPlayersInAreaMinutes",
+                25f,
+                Admin("When no player is in the raid event circle this many real minutes, end the random event so Custom Raids can roll again. Raid creatures may remain (EventMonstersSurviveRaidEnd). 0 = vanilla pause forever."));
+
+            MaxRaidWallClockMinutes = config.Bind(
+                "RaidTimeout",
+                "MaxRaidWallClockMinutes",
+                90f,
+                Admin("Force-end the random event this many real minutes after it started, even if PauseIfNoPlayerInArea froze the timer. Safety net for stuck events. 0 = off."));
 
             AllowMultipleRaids = config.Bind("MultipleRaids", "AllowMultipleRaids", false, Admin("OFF by default. Custom Raids will not start a new raid while any event is still current. Leave false."));
             ContinueSpawningWithoutPlayers = config.Bind("MultipleRaids", "ContinueSpawningWithoutPlayers", false, Admin("OFF by default. When on, keeps the raid timer (and spawn checks) running with nobody in the circle. Leave off so each raid's PauseIfNoPlayerInArea and Duration work as configured."));

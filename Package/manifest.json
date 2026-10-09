@@ -1,6 +1,6 @@
 {
     "name": "PersistentRaids",
-    "version_number": "1.0.7",
+    "version_number": "1.0.8",
     "website_url": "https://discord.gg/cjayride",
     "description": "Raid creatures hunt and persist after the HUD. Open-world mobs stay vanilla. Per-raid Custom Raids durations untouched unless you opt in.",
     "dependencies": [

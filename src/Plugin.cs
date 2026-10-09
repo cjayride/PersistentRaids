@@ -10,7 +10,7 @@ namespace Cjayride.PersistentRaids
     {
         public const string PluginGUID = "cjayride.persistentraids";
         public const string PluginName = "PersistentRaids";
-        public const string PluginVersion = "1.0.7";
+        public const string PluginVersion = "1.0.8";
 
         internal static Plugin Instance;
         internal static Harmony Harmony;

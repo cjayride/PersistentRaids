@@ -18,6 +18,10 @@ Install on server and all clients.
 
 Default cap 220. `OnlyApplyWhilePlayersOnline` turns persistence off when the server is empty so zones can unload.
 
+## Stuck raids (sail away)
+
+With Custom Raids `PauseIfNoPlayerInArea`, the event timer freezes when nobody is in the circle, which blocks the next raid. **`RaidTimeout`** (defaults on): end the random event after **25** real minutes with no players in the circle, or **90** minutes after start (wall clock). Surviving mobs are unchanged unless you clear them. Set either minutes value to **0** to disable that rule.
+
 Zone-unload persistence uses `ZDO.Persistent`. That writes creatures into the save. Keep the cap on.
 
 ## Changelog

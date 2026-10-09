@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.8
+
+- **RaidTimeout:** End the random event when nobody is in the event area for 25 minutes (configurable), or after 90 minutes wall-clock since start. Unblocks Custom Raids after sailing away. Mobs may remain per `EventMonstersSurviveRaidEnd`.
+
 ## 1.0.7
 
 - Raid creature cap counts only raid creatures, from the server's saved records, so it works on a dedicated server. Tames, wildlife, normal spawns, and bosses are never counted or removed.

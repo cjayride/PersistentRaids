@@ -23,9 +23,10 @@ namespace Cjayride.PersistentRaids
         internal static void StopAll(RandEventSystem system)
         {
             Stashed.Clear();
+            RaidEventTimeout.Reset();
             if (system != null)
             {
-                system.SetRandomEvent(null, Vector3.zero);
+                system.ResetRandomEvent();
             }
         }
 
@@ -93,6 +94,7 @@ namespace Cjayride.PersistentRaids
             }
 
             ExtraRaids.ApplyDurationOverride(__instance.m_randomEvent);
+            RaidEventTimeout.OnEventSet(__instance.m_randomEvent);
         }
     }
 
@@ -105,6 +107,8 @@ namespace Cjayride.PersistentRaids
             {
                 return;
             }
+
+            RaidEventTimeout.Tick(__instance);
 
             if (!ModConfig.AllowMultipleRaids.Value || ExtraRaids.Stashed.Count == 0)
             {
