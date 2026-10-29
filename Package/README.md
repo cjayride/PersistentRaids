@@ -1,191 +1,96 @@
-# PersistentRaids
+# ⚔️ PersistentRaids
 
-**Raid/event** monsters keep hunting and get longer sight. Open-world creatures (boars, greydwarves, etc.) stay vanilla.
+Make Valheim raids more persistent, aggressive, and dangerous.
 
-Far-despawn can still be blocked for enemies. Raid **mobs** keep hunting after the HUD ends. Custom Raids owns when the next raid starts. Raid creature cap defaults to 60 server-wide (`CapScope`).
+## 1.0.9
 
-Do not enable Expand World Events Multiple events. Leave `AllowMultipleRaids = false`.
+- Verified against Valheim 1.0.21 (Steam build 26249040). BepInEx dependency: `denikson-BepInExPack_Valheim-5.4.2360`.
 
-Install on **server and all clients**.
+**PersistentRaids** is a BepInEx mod that keeps raid and event creatures hunting players with extended sight and persistent behavior. Normal open-world creatures retain vanilla behavior, so wildlife won't permanently accumulate around your bases.
 
-Commands: `persistraid clear | event | stop | cap | boss <prefab>`
+Custom Raids remains responsible for deciding when raids begin. PersistentRaids handles the creatures after they spawn.
 
-## Changelog
+## ✨ Features
 
-### 1.0.8
+- **Persistent Raid Creatures** — Raid and event monsters won't despawn simply because players move away.
+- **Extended Detection Range** — Raid creatures can spot and pursue players from farther away.
+- **Aggressive AI** — Raid creatures are kept in hunt and alert states instead of fleeing or wandering aimlessly.
+- **Configurable Monster Limits** — Control the number of active raid creatures server-wide, around players, or both.
+- **Stuck Raid Protection** — Automatically ends random events that remain active after players leave the event area for too long.
+- **Vanilla Wildlife Behavior** — Normal world spawns aren't affected by raid persistence or extended detection.
+- **Server-Side Cleanup Commands** — Manage raid creatures and recover from stuck events.
 
-- **RaidTimeout:** If nobody is in the event circle for 25 real minutes, or the event has been running 90 minutes, the random event ends so Custom Raids can roll again (mobs may stay).
+## ⚠️ Important Compatibility Settings
 
-### 1.0.7
+**Do not enable Expand World Events' `Multiple events` feature.**
 
-- Cap counts only raid creatures and works on a dedicated server. Tames, wildlife, and bosses are never removed.
-- `CapScope`: `ServerWide` (default 60), `PerPlayerArea` (default 40 within 200 m), or `Both`. Furthest from players go first.
+Keep the following setting disabled:
 
-### 1.0.6
-
-- ALL raid/event creatures forced to fight every AI tick (block flee, keep hunt). Every raid, every shy prefab.
-
-### 1.0.5
-
-- Timers: leave per-raid Custom Raids `Duration` / `PauseIfNoPlayerInArea` alone by default. Optional `OverrideRaidDurations` is off.
-- Raid AI: force hunt + alert, clear shy flee flags so Greylings fight instead of milling.
-
-### 1.0.4
-
-- Persistence is raid-only now. Never-despawn / `ZDO.Persistent` apply only to raid/event creatures (and bosses).
-- Open-world wildlife culls like vanilla, so it no longer piles up around bases (fixes base-area FPS).
-
-### 1.0.3
-
-- Fix: 1.0.1 lied that a player was always inside the raid circle and could report a stashed event as “current”. Custom Raids then skipped every new raid.
-- `AllowMultipleRaids` now defaults **false**. `persistraid stop` clears a stuck current event.
-
-### 1.0.2
-
-- Long-range sight, forced hunt, and never-lose-aggro apply **only** to RandomEvent / raid creatures.
-- Open-world mobs keep vanilla view range and aggro.
-- Night despawn skip is raid-only.
-- World bosses no longer inherit raid hunt from `NeverDespawnBosses`.
-
-### 1.0.1
-
-- Initial release.
-
-## Config Values
-
-
-[Despawn]
-
-Block far-despawn and mark ZDOs persistent for RAID/event creatures only. Open-world wildlife culls like vanilla so it does not pile up around bases.
-Setting type: Boolean
-Default value: true
-NeverDespawnMonsters = true
-
-Bosses persist / skip far-despawn. Hunt range is still raid-only.
-Setting type: Boolean
-Default value: true
-NeverDespawnBosses = true
-
-Event creatures keep hunting after the raid timer ends.
-Setting type: Boolean
-Default value: true
-EventMonstersSurviveRaidEnd = true
-
-Ignore despawn-in-day on night-spawned event creatures.
-Setting type: Boolean
-Default value: true
-NeverDespawnNightMonsters = true
-
-[Filters]
-
-Comma prefab names. Empty = all enemies.
-Setting type: String
-Default value: 
-CreatureWhitelist = 
-
-Comma prefab names to ignore.
-Setting type: String
-Default value: 
-CreatureBlacklist = 
-
-[General]
-
-Master switch.
-Setting type: Boolean
-Default value: true
-Enabled = true
-
-[Logging]
-
-Log blocked despawns and extra raids.
-Setting type: Boolean
-Default value: false
-EnableDebugLogging = false
-
-Log when the monster cap is hit.
-Setting type: Boolean
-Default value: true
-LogCapEvents = true
-
-[MultipleRaids]
-
-Leave false. Custom Raids will not start a new raid while any event is still current.
-Setting type: Boolean
-Default value: false
+```ini
 AllowMultipleRaids = false
+```
 
-OFF by default. When on, keeps the raid timer (and spawn checks) running with nobody in the circle. Leave off so each raid's PauseIfNoPlayerInArea and Duration work as configured.
-Setting type: Boolean
-Default value: false
-ContinueSpawningWithoutPlayers = false
+Custom Raids controls when raids start. PersistentRaids preserves raid creatures and helps manage their behavior; it does not need to take over raid scheduling.
 
-Unused (kept so old configs still load).
-Setting type: Single
-Default value: 600
-SpawnWithoutPlayersDuration = 600
+## 📦 Installation
 
-OFF by default. When on, replaces every random-event Duration with OverrideDurationSeconds. Leave off to use each Custom Raids Duration.
-Setting type: Boolean
-Default value: false
-OverrideRaidDurations = false
+1. Install **BepInEx** for Valheim.
+2. Install PersistentRaids on the **dedicated server and every client**.
+3. Start the game or server to generate the configuration file.
+4. Review the configuration before adjusting monster limits or raid timeout settings.
 
-Only used when OverrideRaidDurations is on. Seconds.
-Setting type: Single
-Default value: 60
-OverrideDurationSeconds = 60
+Configuration file:
 
-[RaidChase]
+`BepInEx/config/cjayride.PersistentRaids.cfg`
 
-Only RandomEvent/raid creatures keep hunt/aggro. Open-world mobs stay vanilla.
-Setting type: Boolean
-Default value: true
-EnablePersistentChase = true
+## ⚙️ Monster Limits & Performance
 
-Multiplies view/alert/chase range for raid creatures only. 1 = vanilla.
-Setting type: Single
-Default value: 3
-ChaseRangeMultiplier = 3
+Persistent creatures are written to the world save using `ZDO.Persistent`. This prevents normal zone unloading from removing them, but it also means creatures can accumulate if left unmanaged.
 
-Absolute chase cap in meters. 0 = multiplier only.
-Setting type: Single
-Default value: 200
-MaxChaseDistance = 200
+**Keep the monster cap enabled** to help control performance and prevent excessive creature buildup.
 
-[Safety]
+| Setting | Default | Description |
+|---|---:|---|
+| `MaxActiveMonsters` | `60` | Maximum active raid creatures for the default server-wide cap scope. |
+| `CapScope` | `ServerWide` | Choose `ServerWide`, `PerPlayerArea`, or `Both`. |
+| `MaxPerPlayerArea` | `40` | Maximum raid creatures per player area. |
+| `PlayerAreaRadius` | `200` | Radius around players, in meters, for the per-player-area cap. |
+| Cap check interval | `2 minutes` | How often the monster cap is enforced. |
+| `OnlyApplyWhilePlayersOnline` | — | Disables persistence while the server is empty, allowing zones to unload. |
 
-Hard cap on living non-player characters.
-Setting type: Boolean
-Default value: true
-EnableMonsterCap = true
+When a cap is exceeded, the mod prioritizes removing excess raid creatures furthest from players. Tames, ordinary wildlife, normal spawns, and bosses are excluded from the raid-creature cap.
 
-Global living monster cap.
-Setting type: Int32
-Default value: 220
-MaxActiveMonsters = 220
+## ⏱️ Stuck Raid Protection
 
-0 = stop persisting new ones. 1 = despawn oldest. 2 = despawn furthest from any player.
-Setting type: Int32
-Default value: 1
-CapBehavior = 1
+Custom Raids can pause an event when nobody is inside its event area. If everyone sails away, the event timer may freeze and prevent another raid from starting.
 
-When no players are online, never-despawn rules are off so the server can unload.
-Setting type: Boolean
-Default value: true
-OnlyApplyWhilePlayersOnline = true
+PersistentRaids includes **RaidTimeout**, enabled by default, to recover from this situation.
 
-Minutes between cap sweeps. 0 = only on spawn.
-Setting type: Single
-Default value: 15
-AutoCleanupInterval = 15
+| Setting | Default | Description |
+|---|---:|---|
+| `EndEventAfterNoPlayersInAreaMinutes` | `25` | End the random event after this many real minutes without players in its area. |
+| `MaxRaidWallClockMinutes` | `90` | End the random event after this many real minutes since it started. |
 
-## Contact
+Set either timeout value to `0` to disable that rule.
 
-𝕏: x.com/cjayride
+**Ending an event does not automatically kill its surviving monsters.** They remain unless you remove them separately.
 
-Discord: discord.gg/cjayride (find me at the top of the user list) "cjayride"
+## 🛠️ Server Commands
 
-Twitch: twitch.tv/cjayride
+Run these commands from the server console.
 
-## AI Generated
+| Command | Description |
+|---|---|
+| `persistraid clear` | Destroy non-boss enemies. |
+| `persistraid event` | Destroy event and raid creatures. |
+| `persistraid stop` | Clear a stuck current random event so another raid can start. |
+| `persistraid cap` | Immediately enforce `MaxActiveMonsters`. |
+| `persistraid boss <prefab>` | Destroy bosses matching the specified prefab name. |
 
-This code was AI Generated.
+## 🧠 Raid Behavior & Compatibility
+
+- Raid creatures receive extended sight and persistent hunting behavior.
+- Raid AI is reinforced to prevent fleeing, losing aggression, or clearing its hunt state.
+- Persistence applies to raid/event creatures, not ordinary open-world wildlife.
+- Boss persistence can be configured separately with `NeverDespawnBosses`.
+- Per-raid Custom Raids durations remain in control by default. Optional duration overrides are available if explicitly enabled.

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.9
+
+- Verified against Valheim 1.0.21 (Release build, Steam build 26249040).
+- BepInEx dependency set to `denikson-BepInExPack_Valheim-5.4.2360`.
+
 ## 1.0.8
 
 - **RaidTimeout:** End the random event (not necessarily the mobs) when nobody is in the event area for `EndEventAfterNoPlayersInAreaMinutes` (default **25**), or when `MaxRaidWallClockMinutes` (default **90**) elapses since the event started. Fixes raids frozen by `PauseIfNoPlayerInArea` after sailing away. Set either to **0** to disable.

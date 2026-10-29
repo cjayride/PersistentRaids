@@ -8,7 +8,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>Cjayride.PersistentRaids</AssemblyName>
     <RootNamespace>Cjayride.PersistentRaids</RootNamespace>
-    <Version>1.0.7</Version>
+    <Version>1.0.9</Version>
     <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
